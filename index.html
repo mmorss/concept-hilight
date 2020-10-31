@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+
+    <title>hilight</title>
+    <meta name="description" content="The HTML5 Herald" />
+    <meta name="author" content="TE" />
+    <link
+      id="prismstyle"
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.21.0/themes/prism-tomorrow.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.21.0/plugins/line-numbers/prism-line-numbers.min.css"
+      integrity="sha512-cbQXwDFK7lj2Fqfkuxbo5iD1dSbLlJGXGpfTDqbggqjHJeyzx88I3rfwjS38WJag/ihH7lzuGlGHpDBymLirZQ=="
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style.css?v=1.0" />
+  </head>
+<body>
+<main>
+
+<div class="code-block">
+        
+<pre class="line-numbers language-java hidden">
+<code class="vocab-code">package com.company;
+        
+<div class="block-concept class-block">public class Book {
+    <span class="variable-declaration">private <span class="data-type reference">String</span> name;</span>
+    <span class="code-concept variable-declaration">private <span class="code-concept data-type reference">Author[]</span> authors;</span>
+
+    <div class="block-concept constructor">public Book<span class="parameter-list">(String title, Author[] authors</span>) {
+    <span class="variable-init">this.title = title;</span>
+    <span class="variable-init">this.authors = <span class="method-call">authorsToListArray(authors)</span>;</span>
+}</div>
+    <div class="block-concept method getter">public <span class="code-concept return-type">String</span> getName() {
+    return this.name;
+}</div>
+    <div class="block-concept method getter">public <span return-type>Author[]</span> getAuthors() {
+    return <span class="method-call">this.authors.toArray()</span>;
+}</div>
+    <div class="block-concept method">private <span class="return-type">Author[]</span> <span class="method-name">copyArray</span>(<span class="parameter-list">Author[] authors</span>) {
+    <span class="variable-declare-init"><span class="data-type reference">String[]</span> arr = new String[<span class="method-call">authors.length</span>];</span>
+    
+    for(<span class="loop-init"><span class="variable-declare-init"><span class="data-type primitive">int</span> i = 0</span></span>; <span class="loop-condition"><span class="expression-boolean"> i < <span class="method-call">authors.size()</span></span>;</span> <span class="loop-iterator">i++</span>) {
+      <span class="variable-init">arr[i] = <span class="method-call">authors.get(i)</span>;</span>
+    }
+    return arr;
+}</div>
+}</div></code>
+</pre>
+
+<pre class="line-numbers language-csharp">
+<code class="vocab-code">using System;
+<div class="block-concept namespace-block">namespace BookCollection
+{   
+    <div class="block-concept class-block">public class Book
+{
+    <span class="csharp-property">public <span class="data-type reference">string</span> Name</span> { <span class="getter">get;</span> }
+    <span class="csharp-property">public <span class="data-type reference">Author[]</span> Authors</span> { <span class="getter">get;</span> }
+        
+    <div class="block-concept constructor">public Book(<span class="parameter-list"><span class="data-type reference">string</span> name, <span class="data-type reference">Author[]</span> authors</span>)
+{
+      <span class="variable-declare-init">this.Name = name;</span>
+      <span class="variable-declare-init">this.Authors = authors.CopyArray();</span>
+}</div>
+    <div class="block-concept method">private <span class="return-type">Author[]</span> <span class="method-name">CopyArray</span>(<span class="parameter-list"><span class="data-type reference">Author[]</span> authors</span>) 
+{
+<span><span class="variable-declare-init"><span class="data-type reference">Author[]</span> arr = Author[authors.length];</span></span>
+          
+      for(<span class="loop-init"><span class="variable-declare-init"><span class="data-type primitive">int</span> i = 0</span></span>; <span class="loop-condition"><span class="expression-boolean">i < authors.length</span></span>; <span class="loop-iterator">i++</span>)
+      {
+          arr[i] = authors[i];
+      }
+      return arr;
+}</div>
+}</div>
+}</div></code></pre></div></main>
+    <aside>
+      <div class="top">
+        <button id="java">Java</button>
+        <button id="csharp">C#</button>
+        <ul id="vocab-list"></ul>
+        <div id="concept-list"></div>
+      </div>
+      <div class="bottom">
+        <button id="dark">dark</button>
+        <button id="light">light</button>
+        <button id="default">default</button>
+      </div>
+    </aside>
+
+    <script src="script.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.21.0/prism.min.js"
+      integrity="sha512-WkVkkoB31AoI9DAk6SEEEyacH9etQXKUov4JRRuM1Y681VsTq7jYgrRw06cbP6Io7kPsKx+tLFpH/HXZSZ2YEQ=="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.21.0/plugins/keep-markup/prism-keep-markup.min.js"
+      integrity="sha512-LC5nQYpThDWO3xsegzq9t+OQTcedwKX9ruWEaRsFS5xB1VfTWpOyIBHukVwxJPlNdLVA/Yy31OArNxs7SBrG8g=="
+      crossorigin="anonymous"
+    ></script>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.21.0/components/prism-java.min.js"
+      integrity="sha512-p2vAaPEsPvlIESCpoEI5IyzZowfdVZ2O39PsrOrkuTQl+AjD57T4L/Wxv5S8WCToLou0twQZaWO+tt660Rqb6Q=="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.21.0/components/prism-clike.min.js"
+      integrity="sha512-/WJ9ZNER39LEXW4XzFoMR6ct++/HT++A71MDW2gBbUJExj8hFRtde5Q5QzcHyBMxU97VeH1wEHGBRtNuGJpV4w=="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.21.0/components/prism-csharp.min.js"
+      integrity="sha512-qvSIQfI/qEeMC1E1LMSPCsDl8vFzl0rkBfF6dDcnMJxQT+8M2WjSyDGqHQzZa+RChv3jkdKnZAo99BcAbGsnQg=="
+      crossorigin="anonymous"
+    ></script>
+    
+    <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.21.0/plugins/line-numbers/prism-line-numbers.min.js"
+    integrity="sha512-1oLZvExT5RaW4q2GgvRPf+XzVVGmsKirfZBRN7aifdOpvZ1L9idEncfMFlfHiQNGBA+Sev+alscSAT/xQ0rwXA=="
+    crossorigin="anonymous"
+  ></script>
+  </body>
+</html>
