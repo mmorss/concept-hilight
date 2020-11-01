@@ -1,6 +1,11 @@
 let selectedConcept = null;
 let selectedLanguage = "java";
 let languages = ["java", "csharp"];
+let themes = {
+  default: "https://cdnjs.cloudflare.com/ajax/libs/prism/1.21.0/themes/prism.min.css",
+  dark: "https://cdnjs.cloudflare.com/ajax/libs/prism/1.21.0/themes/prism-tomorrow.min.css",
+  light: "https://cdnjs.cloudflare.com/ajax/libs/prism/1.21.0/themes/prism-coy.min.css" 
+};
 let not = {
   java: "csharp",
   csharp: "java"
@@ -102,19 +107,9 @@ document.getElementById("csharp").addEventListener("click", () => {
   clearSelection();
 }); 
 
-document.getElementById("dark").addEventListener("click", () => {
-  document.getElementById("prismstyle").href =
-    "https://cdnjs.cloudflare.com/ajax/libs/prism/1.21.0/themes/prism-tomorrow.min.css";
-});
-
-document.getElementById("light").addEventListener("click", () => {
-  document.getElementById("prismstyle").href =
-    "https://cdnjs.cloudflare.com/ajax/libs/prism/1.21.0/themes/prism-coy.min.css";
-});
-
-document.getElementById("default").addEventListener("click", () => {
-  document.getElementById("prismstyle").href =
-    "https://cdnjs.cloudflare.com/ajax/libs/prism/1.21.0/themes/prism.min.css";
+document.querySelector(".bottom").addEventListener("click", (e) => {
+  document.getElementById("prismstyle").href = themes[e.target.id];
+  localStorage.setItem("themePref", e.target.id);
 });
 
 document.getElementById("concept-list").addEventListener("click", (e) => {
@@ -145,7 +140,9 @@ function clearSelection() {
 
 document.addEventListener("readystatechange", () => {
   selectedLanguage = localStorage.getItem("languagePref") ?? "csharp";
+  document.getElementById("prismstyle").href = themes[localStorage.getItem("themePref")] ?? themes.default;
 });
+
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelector(".language-" + not[selectedLanguage]).classList.add("hidden");
   loadConceptList();
