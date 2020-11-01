@@ -1,5 +1,10 @@
 let selectedConcept = null;
-let selectedLanguage = "csharp";
+let selectedLanguage = "java";
+let languages = ["java", "csharp"];
+let not = {
+  java: "csharp",
+  csharp: "java"
+};
 
 const concepts = [
   {
@@ -85,6 +90,7 @@ function loadConceptList() {
   document.querySelector(".language-csharp").classList.add("hidden");
   document.querySelector(".language-java").classList.remove("hidden");
   selectedLanguage = "java";
+  localStorage.setItem("languagePref", "java");
   clearSelection();
 });
 
@@ -92,6 +98,7 @@ document.getElementById("csharp").addEventListener("click", () => {
   document.querySelector(".language-java").classList.add("hidden");
   document.querySelector(".language-csharp").classList.remove("hidden");
   selectedLanguage = "csharp";
+  localStorage.setItem("languagePref", "csharp");
   clearSelection();
 }); 
 
@@ -133,8 +140,13 @@ function clearSelection() {
     e.classList.remove("selected-concept");
   });
   selectedConcept = null;
-}
+};
 
+
+document.addEventListener("readystatechange", () => {
+  selectedLanguage = localStorage.getItem("languagePref") ?? "csharp";
+});
 document.addEventListener("DOMContentLoaded", () => {
+  document.querySelector(".language-" + not[selectedLanguage]).classList.add("hidden");
   loadConceptList();
 });
