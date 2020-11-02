@@ -35,7 +35,7 @@ const concepts = [
     title: "Conditionals",
     collapsible: true,
     children: [
-      ["boolean-expression", "Boolean Expression"]
+      ["expression-boolean", "Boolean Expression"]
     ]
   },
   {
@@ -78,7 +78,7 @@ function toggleSidebarLink(el) {
     el.style.display = "none";
   }
 }
-
+// Fix This
 function loadConceptList() {
   let index = 0;
   concepts.forEach((concept) => {
@@ -94,7 +94,6 @@ function loadConceptList() {
       const ul = document.createElement('ul');
       ul.classList.add("sidebar-links", "sidegar-group-links");
       ul.style.display = "none";
-      
       
      //Build submenus
       concept.children.forEach((child) => {
@@ -162,22 +161,6 @@ document.querySelector(".bottom").addEventListener("click", (e) => {
   localStorage.setItem("themePref", e.target.id);
 });
 
-document.getElementById("concept-list").addEventListener("click", (e) => {
-  let choice = concepts[e.target.getAttribute("data-index")].name;
-
-  if(selectedConcept === choice) {
-    clearSelection();
-  } 
-  else {
-    clearSelection();
-    e.target.classList.add("selected-concept");
-    let els = Array.from(document.getElementsByClassName(choice));
-    els.forEach( item => {
-      item.classList.add("selected-concept");
-    });
-    selectedConcept = choice;
-  }
-});
 
 function clearSelection() {
   document.querySelectorAll(".selected-concept").forEach( e => {
