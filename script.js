@@ -1,5 +1,6 @@
 let selectedConcept = null;
 let selectedLanguage = "java";
+let selectedTopic = null;
 let languages = ["java", "csharp"];
 let themes = {
   default: "https://cdnjs.cloudflare.com/ajax/libs/prism/1.21.0/themes/prism.min.css",
@@ -13,82 +14,131 @@ let not = {
 
 const concepts = [
   {
-    name: "class-block",
-    text: "Class",
+    title: "Data Types",
+    collapsible: true,
+    children: [
+      ["data-type", "Data Type"],
+      ["primitive", "Primitive Type"],
+      ["reference", "Reference Type"]
+    ]
   },
   {
-    name: "namespace-block",
-    text: "Namespace",
+    title: "Variables",
+    collapsible: true,
+    children: [
+      ["variable-declaration", "Variable Declaration"],
+      ["variable-init", "Variable Initialization"],
+      ["variable-declare-init", "Declaration & Initialization"]
+    ]
   },
   {
-    name: "constructor",
-    text: "Constructor",
+    title: "Conditionals",
+    collapsible: true,
+    children: [
+      ["boolean-expression", "Boolean Expression"]
+    ]
   },
   {
-    name: "method",
-    text: "Method",
+    title: "Loops",
+    collapsible: true,
+    children: [
+      ["for-loop", "For Loop"],
+      ["loop-init", "Loop Initialization"],
+      ["loop-condition", "Loop Condition"],
+      ["loop-iterator", "Loop Iterator"]
+    ]
   },
   {
-    name: "method-name",
-    text: "Method Name",
+    title: "Methods",
+    collapsable: true,
+    children: [
+      ["method", "Method"],
+      ["method-name", "Method Name"],
+      ["return-type", "Return Type"],
+      ["parameter-list", "Parameter List"]
+    ]
   },
   {
-    name: "return-type",
-    text: "Return Type",
-  },
-  {
-    name: "parameter-list",
-    text: "Parameter List",
-  }, 
-  {
-    name: "getter",
-    text: "Getter",
-  },
-  {
-    name: "method-call",
-    text: "Method Call",
-  },
-  {
-    name: "variable-declaration",
-    text: "Variable Declaration",
-  },
-  {
-    name: "data-type",
-    text: "Variable Type",
-  },
-  {
-    name: "variable-init",
-    text: "Variable Initialization",
-  },
-  {
-    name: "variable-declare-init",
-    text: "Combined declaration and initialization",
-  },
-  {
-    name: "primitive",
-    text: "Primitive Type",
-  },
-  {
-    name: "reference",
-    text: "Reference Type",
-  },
-  {
-    name: "expression-boolean",
-    text: "Boolean Expression",
+    title: "Classes and Objects",
+    collabsible: true,
+    children: [
+      ["class-block", "Class"],
+      ["constructor", "Constructor"],
+      ["class-property", "Properties"],
+      ["getter", "Getters"]
+    ]
   }
 ];
+
+function toggleSidebarLink(el) {
+  el.classList.toggle("active");
+  if(el.style.display === "none") {
+    el.style.display = "inline-block";
+  } else {
+    el.style.display = "none";
+  }
+}
+
 function loadConceptList() {
   let index = 0;
-  const div = document.getElementById("concept-list");
   concepts.forEach((concept) => {
-    const item = document.createElement('div');
-    item.id = "code-concept-" + index;
-    item.innerText = concept.text;
-    item.classList.add("code-concept", concept.name);
-    item.setAttribute("data-index", index);
-    div.appendChild(item);
-    index ++;
-  });
+      const parent = document.getElementById("sidebar-groups");
+      
+      // Build Sidebar Headings
+      const heading = document.createElement('section');
+      heading.classList.add("sidebar-group", "collapsible");
+      const p = document.createElement('p');
+      p.innerText = concept.title;
+      p.classList.add("sidebar-heading");
+      heading.appendChild(p);
+      const ul = document.createElement('ul');
+      ul.classList.add("sidebar-links", "sidegar-group-links");
+      ul.style.display = "none";
+      
+      
+     //Build submenus
+      concept.children.forEach((child) => {
+        li = document.createElement('li');
+        sp = document.createElement('span');
+        
+        sp.innerText = child[1];
+        sp.setAttribute("concept-name", child[0]);
+        li.appendChild(sp);
+        
+        sp.addEventListener("click", (e) => {
+          let choice = child[0];
+          if(selectedConcept === choice) {
+            clearSelection();
+          } 
+          else {
+            clearSelection();
+            e.target.classList.add("selected-concept");
+            let els = Array.from(document.getElementsByClassName(choice));
+            els.forEach( item => {
+              item.classList.add("selected-concept");
+            });
+            selectedConcept = choice;
+          }
+        });
+        ul.appendChild(li);
+      })
+      heading.appendChild(ul);
+      parent.appendChild(heading);
+
+      p.addEventListener("click", (e) => {
+        clearSelection();
+        let item = e.target.nextElementSibling;
+        if(item.classList.contains("active")) {
+          toggleSidebarLink(item);
+        } else {
+          let clear = document.querySelector(".active");
+          if(clear !== null) {
+            toggleSidebarLink(clear);
+          }
+          toggleSidebarLink(item);
+        }
+      })
+});
 }
 
   document.getElementById("java").addEventListener("click", () => {
@@ -131,7 +181,6 @@ document.getElementById("concept-list").addEventListener("click", (e) => {
 
 function clearSelection() {
   document.querySelectorAll(".selected-concept").forEach( e => {
-    console.log(e);
     e.classList.remove("selected-concept");
   });
   selectedConcept = null;

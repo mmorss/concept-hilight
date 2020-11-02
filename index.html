@@ -29,25 +29,26 @@
 <code class="vocab-code">package com.company;
         
 <div class="block-concept class-block">public class Book {
-    <span class="variable-declaration">private <span class="data-type reference">String</span> name;</span>
-    <span class="code-concept variable-declaration">private <span class="code-concept data-type reference">Author[]</span> authors;</span>
+    <span class="variable-declaration class-properties">private <span class="data-type reference">String</span> title;</span>
+    <span class="code-concept variable-declaration class-properties">private <span class="code-concept data-type reference">Author[]</span> authors;</span>
 
     <div class="block-concept constructor">public Book<span class="parameter-list">(String title, Author[] authors</span>) {
     <span class="variable-init">this.title = title;</span>
-    <span class="variable-init">this.authors = <span class="method-call">authorsToListArray(authors)</span>;</span>
+    <span class="variable-init">this.authors = <span class="method-call">copyArray(authors)</span>;</span>
 }</div>
-    <div class="block-concept method getter">public <span class="code-concept return-type">String</span> getName() {
-    return this.name;
+    <div class="block-concept method getter">public <span class="code-concept return-type">String</span> getTitle() {
+    return this.title;
 }</div>
     <div class="block-concept method getter">public <span return-type>Author[]</span> getAuthors() {
     return <span class="method-call">this.authors.toArray()</span>;
 }</div>
     <div class="block-concept method">private <span class="return-type">Author[]</span> <span class="method-name">copyArray</span>(<span class="parameter-list">Author[] authors</span>) {
-    <span class="variable-declare-init"><span class="data-type reference">String[]</span> arr = new String[<span class="method-call">authors.length</span>];</span>
+    <span class="variable-declare-init"><span class="data-type reference">Author[]</span> arr = new String[<span class="method-call">authors.length</span>];</span>
     
-    for(<span class="loop-init"><span class="variable-declare-init"><span class="data-type primitive">int</span> i = 0</span></span>; <span class="loop-condition"><span class="expression-boolean"> i < <span class="method-call">authors.size()</span></span>;</span> <span class="loop-iterator">i++</span>) {
-      <span class="variable-init">arr[i] = <span class="method-call">authors.get(i)</span>;</span>
-    }
+    <div class="block-concept for-loop">for(<span class="loop-init"><span class="variable-declare-init"><span class="data-type primitive">int</span> i = 0</span></span>; <span class="loop-condition"><span class="expression-boolean"> i < <span class="method-call">authors.size()</span></span>;</span> <span class="loop-iterator">i++</span>) {
+    <span class="variable-init">arr[i] = <span class="method-call">authors[];</span>;</span>
+}</div>
+
     return arr;
 }</div>
 }</div></code>
@@ -59,23 +60,23 @@
 {   
     <div class="block-concept class-block">public class Book
 {
-    <span class="csharp-property">public <span class="data-type reference">string</span> Name</span> { <span class="getter">get;</span> }
-    <span class="csharp-property">public <span class="data-type reference">Author[]</span> Authors</span> { <span class="getter">get;</span> }
+    <span class="class-property">public <span class="data-type reference">string</span> Title</span> { <span class="getter">get;</span> }
+    <span class="class-property">public <span class="data-type reference">Author[]</span> Authors</span> { <span class="getter">get;</span> }
         
-    <div class="block-concept constructor">public Book(<span class="parameter-list"><span class="data-type reference">string</span> name, <span class="data-type reference">Author[]</span> authors</span>)
+    <div class="block-concept constructor">public Book(<span class="parameter-list"><span class="data-type reference">string</span> title, <span class="data-type reference">Author[]</span> authors</span>)
 {
-      <span class="variable-declare-init">this.Name = name;</span>
-      <span class="variable-declare-init">this.Authors = authors.CopyArray();</span>
+    <span class="variable-declare-init">this.Title = title;</span>
+    <span class="variable-declare-init">this.Authors = authors.CopyArray();</span>
 }</div>
     <div class="block-concept method">private <span class="return-type">Author[]</span> <span class="method-name">CopyArray</span>(<span class="parameter-list"><span class="data-type reference">Author[]</span> authors</span>) 
 {
-<span><span class="variable-declare-init"><span class="data-type reference">Author[]</span> arr = Author[authors.length];</span></span>
+    <span class="variable-declare-init"><span class="data-type reference">Author[]</span> arr = new Author[authors.length];</span>
           
-      for(<span class="loop-init"><span class="variable-declare-init"><span class="data-type primitive">int</span> i = 0</span></span>; <span class="loop-condition"><span class="expression-boolean">i < authors.length</span></span>; <span class="loop-iterator">i++</span>)
-      {
-          arr[i] = authors[i];
-      }
-      return arr;
+    <span class="block-concept for-loop">for(<span class="loop-init"><span class="variable-declare-init"><span class="data-type primitive">int</span> i = 0</span></span>; <span class="loop-condition"><span class="expression-boolean">i < authors.length</span></span>; <span class="loop-iterator">i++</span>)
+{
+    arr[i] = authors[i];
+}</span>
+    return arr;
 }</div>
 }</div>
 }</div></code></pre></div></main>
@@ -83,6 +84,9 @@
       <div class="top">
         <button id="java">Java</button>
         <button id="csharp">C#</button>
+        <div class="sidebar">
+        <ul id="sidebar-groups"></ul>
+        </div>
         <ul id="vocab-list"></ul>
         <div id="concept-list"></div>
       </div>
