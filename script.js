@@ -1,17 +1,20 @@
 let selectedConcept = null;
 let selectedLanguage = "java";
-let selectedTopic = null;
+let currentTheme = "dark";
+let selectedTopic = null; 
 let languages = ["java", "csharp"];
 let themes = {
-  default: "https://cdnjs.cloudflare.com/ajax/libs/prism/1.21.0/themes/prism.min.css",
+  light: "https://cdnjs.cloudflare.com/ajax/libs/prism/1.21.0/themes/prism.min.css",
   dark: "https://cdnjs.cloudflare.com/ajax/libs/prism/1.21.0/themes/prism-tomorrow.min.css",
-  light: "https://cdnjs.cloudflare.com/ajax/libs/prism/1.21.0/themes/prism-coy.min.css" 
 };
 let not = {
   java: "csharp",
   csharp: "java"
 };
-
+let langText = {
+  java: "Java",
+  csharp: "C#"
+}
 const concepts = [
   {
     title: "Data Types",
@@ -86,20 +89,20 @@ function loadConceptList() {
       
       // Build Sidebar Headings
       const heading = document.createElement('section');
-      heading.classList.add("sidebar-group", "collapsible");
+      heading.classList.add("sidebar-group");
       const p = document.createElement('p');
       p.innerText = concept.title;
       p.classList.add("sidebar-heading");
       heading.appendChild(p);
       const ul = document.createElement('ul');
       ul.classList.add("sidebar-links", "sidegar-group-links");
-      ul.style.display = "none";
+      ul.style.display = "inline-block";
       
      //Build submenus
       concept.children.forEach((child) => {
         li = document.createElement('li');
         sp = document.createElement('span');
-        
+        sp.classList.add("sidebar-link");
         sp.innerText = child[1];
         sp.setAttribute("concept-name", child[0]);
         li.appendChild(sp);
@@ -123,42 +126,41 @@ function loadConceptList() {
       })
       heading.appendChild(ul);
       parent.appendChild(heading);
-
-      p.addEventListener("click", (e) => {
-        clearSelection();
-        let item = e.target.nextElementSibling;
-        if(item.classList.contains("active")) {
-          toggleSidebarLink(item);
-        } else {
-          let clear = document.querySelector(".active");
-          if(clear !== null) {
-            toggleSidebarLink(clear);
-          }
-          toggleSidebarLink(item);
-        }
-      })
 });
 }
 
-  document.getElementById("java").addEventListener("click", () => {
-  document.querySelector(".language-csharp").classList.add("hidden");
-  document.querySelector(".language-java").classList.remove("hidden");
-  selectedLanguage = "java";
-  localStorage.setItem("languagePref", "java");
-  clearSelection();
-});
 
-document.getElementById("csharp").addEventListener("click", () => {
-  document.querySelector(".language-java").classList.add("hidden");
-  document.querySelector(".language-csharp").classList.remove("hidden");
-  selectedLanguage = "csharp";
-  localStorage.setItem("languagePref", "csharp");
-  clearSelection();
-}); 
 
 document.querySelector(".bottom").addEventListener("click", (e) => {
-  document.getElementById("prismstyle").href = themes[e.target.id];
-  localStorage.setItem("themePref", e.target.id);
+  selectedTheme = e.target.id;
+  
+  
+    document.querySelector(".theme").classList.remove(currentTheme + "-theme");
+    document.querySelector(".theme").classList.add(selectedTheme + "-theme");
+    currentTheme = selectedTheme;
+    document.getElementById("prismstyle").href = themes[e.target.id];
+    localStorage.setItem("themePref", e.target.id);
+ 
+  
+});
+
+document.querySelector(".theme-switcher").addEventListener("change", (e) => {
+  console.log(e.target);
+  console.log(e.target.checked);
+    if (e.target.checked) {
+      document.querySelector(".theme").classList.remove("dark-theme");
+      document.querySelector(".theme").classList.add("light-theme");
+      currentTheme="light";
+      document.getElementById("prismstyle").href = themes.light;
+      localStorage.setItem("themePref", "light");
+    } else {
+      document.querySelector(".theme").classList.remove("light-theme");
+      document.querySelector(".theme").classList.add("dark-theme");
+      currentTheme = "dark";
+      document.getElementById("prismstyle").href = themes.dark;
+      localStorage.setItem("themePref", "dark");
+    }
+
 });
 
 
@@ -170,9 +172,40 @@ function clearSelection() {
 };
 
 
+
+
+document.querySelectorAll(".lang-btn").forEach(item => {
+  item.addEventListener("click", (e) => {
+    if(!e.target.classList.contains(selectedLanguage)) {
+    selectedLanguage = not[selectedLanguage];
+    document.querySelector(".lang-btn.java").classList.toggle("selected");
+    document.querySelector(".lang-btn.csharp").classList.toggle("selected");
+    document.querySelector(".language-" + not[selectedLanguage]).classList.add("hidden");
+    document.querySelector(".language-" + selectedLanguage).classList.remove("hidden");
+
+    }
+
+    
+  })
+  });
+
+
+function toggleLanguage(lang) {
+  console.log(lang);
+  selectedLangage = lang;
+  document.querySelector(".lang-butto." + lang).classList.remove("selected");
+  document.querySelector(".lang-butto." + not[lang]).classList.add("selected");
+  document.querySelector(".language-" + not[selectedLanguage]).classList.add("hidden");
+  document.querySelector(".language-" + selectedLanguage).classList.remove("hidden");
+  document.querySelector(".sidebar-h1").innerText = langText[selectedLanguage] + " Concepts";
+  //document.getElementById("prismstyle").href = themes[localStorage.getItem("themePref")] ?? themes.default;
+  
+}
+
+
 document.addEventListener("readystatechange", () => {
   selectedLanguage = localStorage.getItem("languagePref") ?? "csharp";
-  document.getElementById("prismstyle").href = themes[localStorage.getItem("themePref")] ?? themes.default;
+  document.getElementById("prismstyle").href = themes[localStorage.getItem("themePref")] ?? themes.dark;
 });
 
 document.addEventListener("DOMContentLoaded", () => {

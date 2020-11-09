@@ -20,7 +20,44 @@
     />
     <link rel="stylesheet" href="style.css?v=1.0" />
   </head>
-<body>
+<body class="theme dark-theme">
+<header class="app-header">
+  <div class="header-layout">
+    <div class="header">
+      <div class="header-left">
+    <div class="site-name">Concept Selector</div>
+    <!-- <div class="language-button">
+      <select name="languages" id="languages">
+        <option value="csharp">C#</option>
+        <option value="java">Java</option>
+      </select>
+    </div> -->
+  </div>
+    
+
+    <div class="header-right">
+      <span class="lang-btn java selected" value="java">Java</span>
+      <span class="lang-btn csharp" value="csharp">C#</span>
+     <!--  <input class="hidden" type="radio" id="java-radio" name="lang-toggle" value="java" checked>
+      <label id="java-radio-label" for="java-radio" class="lang-label java-label selected">Java</label>
+      <input class="hidden" type="radio" id="csharp-radio" name="lang-toggle" value="csharp">
+      <label id="csharp-radio-label" for="csharp-radio" class="lang-label csharp-label">C#</label> -->
+   
+      <label class="theme-switcher">
+      <input type="checkbox" name="dark-theme" class="theme-switcher hidden" value="dark">
+      <span class="them-switcher-slider">
+        <svg xlmns="http://www.w3.org/2000/svg" width="24" height="24">
+          <g fill="none" fill-rule="evenodd">
+            <circle cx="12" cy="12" r="11.5" stroke="currentColor"></circle>
+            <path fill="currentColor" d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12z"></path>
+          </g>
+        </svg>
+      </span>
+      </label>
+    </div>
+  </div>
+  </div>
+</header>
 <main>
 
 <div class="code-block">
@@ -82,18 +119,21 @@
 }</div></code></pre></div></main>
     <aside>
       <div class="top">
-        <button id="java">Java</button>
-        <button id="csharp">C#</button>
+        <!-- <button id="java">Java</button>
+        <button id="csharp">C#</button> -->
         <div class="sidebar">
+          <!-- <div class="sidebar-header">
+            <h1 class="sidebar-h1">C# Concepts</h1>
+          </div> -->
         <ul id="sidebar-groups"></ul>
         </div>
         <ul id="vocab-list"></ul>
         <div id="concept-list"></div>
       </div>
       <div class="bottom">
-        <button id="dark">dark</button>
+        <!-- <button id="dark">dark</button>
         <button id="light">light</button>
-        <button id="default">default</button>
+        <button id="default">default</button> -->
       </div>
     </aside>
 
