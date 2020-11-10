@@ -1,13 +1,13 @@
 let selectedConcept = null;
-let selectedLanguage = "java";
-let currentTheme = "dark";
+let currentLanguage = "java";
+let currentTheme = "default";
 let selectedTopic = null; 
 let languages = ["java", "csharp"];
 let themes = {
-  light: "https://cdnjs.cloudflare.com/ajax/libs/prism/1.21.0/themes/prism.min.css",
+  default: "https://cdnjs.cloudflare.com/ajax/libs/prism/1.21.0/themes/prism.min.css",
   dark: "https://cdnjs.cloudflare.com/ajax/libs/prism/1.21.0/themes/prism-tomorrow.min.css",
 };
-let not = {
+notLanguage = {
   java: "csharp",
   csharp: "java"
 };
@@ -52,13 +52,28 @@ const concepts = [
     ]
   },
   {
+    title: "Arrays",
+    collapsible: true,
+    children: [
+      ["array-type", "Array Type"],
+      ["element-type", "Element Type"],
+      ["array-init", "Array Initialization"],
+      ["array-element", "Array Element"],
+      ["array-index", "Element Index"],
+      ["array-property", "Array Property"],
+      ["shallow-copy", "Shallow Copy"]
+    ]
+  },
+  {
     title: "Methods",
     collapsable: true,
     children: [
       ["method", "Method"],
+      ["method-sig", "Method Signature"],
       ["method-name", "Method Name"],
+      ["parameter-list", "Parameter List"],
       ["return-type", "Return Type"],
-      ["parameter-list", "Parameter List"]
+      ["method-call", "Method Call"]
     ]
   },
   {
@@ -144,24 +159,13 @@ document.querySelector(".bottom").addEventListener("click", (e) => {
   
 });
 
-document.querySelector(".theme-switcher").addEventListener("change", (e) => {
-  console.log(e.target);
-  console.log(e.target.checked);
-    if (e.target.checked) {
-      document.querySelector(".theme").classList.remove("dark-theme");
-      document.querySelector(".theme").classList.add("light-theme");
-      currentTheme="light";
-      document.getElementById("prismstyle").href = themes.light;
-      localStorage.setItem("themePref", "light");
-    } else {
-      document.querySelector(".theme").classList.remove("light-theme");
-      document.querySelector(".theme").classList.add("dark-theme");
-      currentTheme = "dark";
-      document.getElementById("prismstyle").href = themes.dark;
-      localStorage.setItem("themePref", "dark");
-    }
-
+document.querySelector(".theme-switcher.hidden").addEventListener("change", (e) => {
+  currentTheme = e.target.checked ? "dark" : "default";
+  localStorage.setItem("themePref", currentTheme);
+  setTheme(e.target.checked ? "dark" : "default");
 });
+
+
 
 
 function clearSelection() {
@@ -171,44 +175,55 @@ function clearSelection() {
   selectedConcept = null;
 };
 
-
-
-
 document.querySelectorAll(".lang-btn").forEach(item => {
   item.addEventListener("click", (e) => {
-    if(!e.target.classList.contains(selectedLanguage)) {
-    selectedLanguage = not[selectedLanguage];
-    document.querySelector(".lang-btn.java").classList.toggle("selected");
-    document.querySelector(".lang-btn.csharp").classList.toggle("selected");
-    document.querySelector(".language-" + not[selectedLanguage]).classList.add("hidden");
-    document.querySelector(".language-" + selectedLanguage).classList.remove("hidden");
-
+    if(!e.target.classList.contains(currentLanguage)) {
+      toggleLang();
     }
-
-    
   })
   });
 
+  function toggleLang() {
+      newLang = notLanguage[currentLanguage];
+      oldLang = currentLanguage;
+      document.querySelector(".language-" + newLang).classList.remove("hidden");
+      document.querySelector(".language-" + oldLang).classList.add("hidden");
+      currentLanguage = newLang;
+      localStorage.setItem("languagePref", currentLanguage);
+      toggleLangButton(currentLanguage);
+  }
 
-function toggleLanguage(lang) {
-  console.log(lang);
-  selectedLangage = lang;
-  document.querySelector(".lang-butto." + lang).classList.remove("selected");
-  document.querySelector(".lang-butto." + not[lang]).classList.add("selected");
-  document.querySelector(".language-" + not[selectedLanguage]).classList.add("hidden");
-  document.querySelector(".language-" + selectedLanguage).classList.remove("hidden");
-  document.querySelector(".sidebar-h1").innerText = langText[selectedLanguage] + " Concepts";
-  //document.getElementById("prismstyle").href = themes[localStorage.getItem("themePref")] ?? themes.default;
-  
-}
+  function toggleLangButton(lang) {
+    document.querySelector(".lang-btn." + lang).classList.add("selected");
+    document.querySelector(".lang-btn." + notLanguage[lang]).classList.remove("selected");
+  }
 
 
 document.addEventListener("readystatechange", () => {
-  selectedLanguage = localStorage.getItem("languagePref") ?? "csharp";
-  document.getElementById("prismstyle").href = themes[localStorage.getItem("themePref")] ?? themes.dark;
+  currentLanguage = localStorage.getItem("languagePref") ?? currentLanguage;
+  toggleLangButton(currentLanguage);
+  currentTheme = localStorage.getItem("themePref") ?? currentTheme;
+  document.getElementById("prismstyle").href = themes[currentTheme];
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-  document.querySelector(".language-" + not[selectedLanguage]).classList.add("hidden");
+  document.querySelector(".language-" + notLanguage[currentLanguage]).classList.add("hidden");
+  setTheme(localStorage.getItem("themePref") ?? "default");
   loadConceptList();
 });
+
+
+function setTheme(theme) {
+  if (theme === "dark") {
+    currentTheme = "dark";
+    document.querySelector(".theme-switcher.hidden").checked = true;
+    document.querySelector(".theme").classList.remove("default-theme");
+    document.querySelector(".theme").classList.add("dark-theme");
+  } else {
+    currentTheme = "default";
+    document.querySelector(".theme-switcher.hidden").checked = false;
+    document.querySelector(".theme").classList.remove("dark-theme");
+    document.querySelector(".theme").classList.add("default-theme");
+  }
+  document.getElementById("prismstyle").href = themes[currentTheme];
+}
