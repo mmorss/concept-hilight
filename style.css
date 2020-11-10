@@ -5,14 +5,15 @@
   --background-color-light: rgb(245, 242, 240);
   --text-color-light: #363534;
   --border-color-light: darkgray;
-  --highlight-color-light: #7FDBFF;
-  --outline-color-light: #0074D9;
-  --highlight-color-dark: rgba(6, 121, 6, 0.295);
-  --outline-color-dark: #008F11;
+  --highlight-color-light: rgb(0, 176, 240, .3);
+  --outline-color-light: navy;
+  --highlight-color-dark: rgb(0, 176, 240, .2);
+  --outline-color-dark: rgb(0, 143, 17, .7);
   --scrollbar-color-dark: #333333;
   --scrollbar-color-track-dark: #7a7a7a;
   --scrollbar-color-light: #b5b3b1;
   --scrollbar-color-track-light: #dbd9d7;
+  --te-blue: rgb(0, 176, 240, 1);
 }
 
 
@@ -72,9 +73,9 @@ body {
   --border-color: rgba(39, 40, 44, 0.2);
   --text-color: var(--text-color-light);
   --background-color: var(--background-color-light);
-  --outline-color: var(--outline-color-light);
+  --outline-color: cornflowerblue;
   --highlight-color: var(--highlight-color-light);
-  --highlight-color: var(--highlight-color-dark);
+ 
   --scrollbar-color: var(--scrollbar-color-light);
   --scrollbar-color-track: var(--scrollbar-color-track-light);
 }
@@ -184,10 +185,10 @@ aside {
 }
 .sidebar-links {
   line-height: 1.1em;
-  text-align: -webkit-match-parent;
 }
 .sidebar-link {
-  padding: 3px 10px 3px 10px;
+  padding: 0px 10px 0px 10px;
+
 }
 
 .top ul {
@@ -218,8 +219,9 @@ aside {
 #concept-list > .code-concept:hover {
   color: cornflowerblue;
   cursor: default;
+  background-color: var(--highlight-color);
 }
-.sidebar-links > li:hover {
+.sidebar-links > li:hover :not(.selected-concept) {
   color: var(--outline-color);
   cursor: default;
 }
