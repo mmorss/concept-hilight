@@ -7,7 +7,7 @@
   --border-color-light: darkgray;
   --highlight-color-light: rgb(0, 176, 240, .3);
   --outline-color-light: navy;
-  --highlight-color-dark: rgb(0, 176, 240, .2);
+  --highlight-color-dark:#2C3B2C;
   --outline-color-dark: rgb(0, 143, 17, .7);
   --scrollbar-color-dark: #333333;
   --scrollbar-color-track-dark: #7a7a7a;
