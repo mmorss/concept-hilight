@@ -142,7 +142,7 @@ header .language-button {
   background: cornflowerblue;
 }
 main {
-  height: 100vh;
+  height: 90vh;
   grid-area: code;
   display: flex;
   margin: 0px;
@@ -154,7 +154,7 @@ main {
   margin-top: 0px;
 }
 aside {
-  height: 100vh;
+  height: 90vh;
   grid-area: sidebar;
   overflow-y: auto;
 }
